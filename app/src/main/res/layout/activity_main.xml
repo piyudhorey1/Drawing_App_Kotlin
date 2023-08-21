@@ -21,7 +21,7 @@
             android:id="@+id/iv_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/alex_ovs_udyf0_frxqs_unsplash"
+            tools:src="@drawable/alex_ovs_udyf0_frxqs_unsplash"
             android:scaleType="centerCrop"
             />
 
@@ -141,21 +141,39 @@
 
         <ImageButton
             android:id="@+id/ib_gallery"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
             android:layout_margin="6dp"
             android:contentDescription="gallery image"
             android:scaleType="fitXY"
             android:src="@drawable/gallery_send_svgrepo_com" />
 
         <ImageButton
+            android:id="@+id/ib_undo"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
+            android:layout_margin="6dp"
+            android:contentDescription="undo image"
+            android:scaleType="fitXY"
+            android:src="@drawable/undo_left_svgrepo_com" />
+
+        <ImageButton
             android:id="@+id/ib_brush"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
             android:layout_margin="6dp"
             android:contentDescription="brush image"
             android:scaleType="fitXY"
             android:src="@drawable/pencil_brush_svgrepo_com" />
+
+        <ImageButton
+            android:id="@+id/ib_save"
+            android:layout_width="48dp"
+            android:layout_height="45dp"
+            android:layout_margin="6dp"
+            android:contentDescription="save image"
+            android:scaleType="fitXY"
+            android:src="@drawable/save_2_svgrepo_com" />
 
 
     </LinearLayout>

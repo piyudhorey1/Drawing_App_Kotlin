@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.kids_drawing_app"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.kids_drawing_app"
@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.activity:activity-ktx:1.8.0-alpha06")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
