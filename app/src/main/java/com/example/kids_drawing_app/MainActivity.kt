@@ -23,6 +23,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PackageManagerCompat
@@ -41,6 +42,10 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
     private var mImageButtonDefaultPaint: ImageButton? = null
     var customProgressDialog: Dialog? = null
+    companion object{
+        private const val STORAGE_PERMISSION_CODE = 101
+    }
+
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -64,13 +69,23 @@ class MainActivity : AppCompatActivity() {
                     val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     openGalleryLauncher.launch(pickIntent)
                 }else{
-                    if(permissionName == Manifest.permission.READ_EXTERNAL_STORAGE){
+                    if(permissionName == Manifest.permission.READ_MEDIA_IMAGES){
                         Toast.makeText(this@MainActivity, "Permission denied", Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
+//    private fun checkPermission(permission: String, requestCode: Int) {
+//        if (ContextCompat.checkSelfPermission(this@MainActivity, permission) == PackageManager.PERMISSION_DENIED) {
+//
+//            // Requesting the permission
+//            ActivityCompat.requestPermissions(this@MainActivity, arrayOf(permission), requestCode)
+//        } else {
+//            Toast.makeText(this@MainActivity, "Permission already granted", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,17 +173,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isReadStorageAvailable(): Boolean{
-        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-        return result == PackageManager.PERMISSION_GRANTED
+        val result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+        return result == PackageManager.PERMISSION_DENIED
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestStoragePermission(){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+//        if(ContextCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE))
+        if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             showRationaleDialog("Kids Drawing App", "Kids Drawing App " + "needs to access your external storage")
         }else{
-            requestPermission.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            requestPermission.launch(arrayOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
         }
     }
+
+
 
     private fun showRationaleDialog(title: String, message: String){
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
